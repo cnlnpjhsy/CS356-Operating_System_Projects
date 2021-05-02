@@ -1,5 +1,5 @@
 # CS356-Operating_System_Projects
-上海交通大学CS356《操作系统课程设计》Project作业
+上海交通大学CS356《操作系统课程设计》2020-2021春季学期课程Project
 
 - Project 1: Android Process Tree (Updated 2021/5/2)
   - `ptree` implement
