@@ -1,0 +1,36 @@
+cnlnpjhsy@ubuntu:~/Desktop/OSProj1/P1/bbc$ ./BBC 2 3 8 2
+Cooks[2], Cashiers[3], Customers[8]
+Begin run.
+Cook [2] make a burger.
+Customer [8] come.
+Cook [1] make a burger.
+Cashier [1] accepts an order.
+Cashier [1] take a burger to customer.
+Cook [2] make a burger.
+Customer [7] come.
+Cashier [2] accepts an order.
+Cashier [2] take a burger to customer.
+Customer [6] come.
+Cashier [3] accepts an order.
+Cashier [3] take a burger to customer.
+Cook [1] make a burger.
+Cook [2] make a burger.
+Customer [5] come.
+Cashier [1] accepts an order.
+Cashier [1] take a burger to customer.
+Cook [1] make a burger.
+Customer [3] come.
+Cashier [2] accepts an order.
+Cashier [2] take a burger to customer.
+Customer [2] come.
+Customer [4] come.
+Cook [2] make a burger.
+Customer [1] come.
+Cashier [2] accepts an order.
+Cashier [2] take a burger to customer.
+Cashier [1] accepts an order.
+Cashier [1] take a burger to customer.
+Cashier [3] accepts an order.
+Cook [2] make a burger.
+Cashier [3] take a burger to customer.
+Running ended.
