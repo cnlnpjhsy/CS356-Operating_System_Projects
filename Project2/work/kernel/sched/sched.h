@@ -50,6 +50,14 @@ static inline int rt_policy(int policy)
 	return 0;
 }
 
+/* Modified */
+static inline int wrr_policy(int policy)
+{
+	if (policy == SCHED_WRR)
+		return 1;
+	return 0;
+}
+
 static inline int task_has_rt_policy(struct task_struct *p)
 {
 	return rt_policy(p->policy);
@@ -79,6 +87,8 @@ extern struct mutex sched_domains_mutex;
 
 struct cfs_rq;
 struct rt_rq;
+/* Modified: struct wrr_rq declaration */
+struct wrr_rq;
 
 extern struct list_head task_groups;
 
@@ -191,6 +201,10 @@ extern int alloc_rt_sched_group(struct task_group *tg, struct task_group *parent
 extern void init_tg_rt_entry(struct task_group *tg, struct rt_rq *rt_rq,
 		struct sched_rt_entity *rt_se, int cpu,
 		struct sched_rt_entity *parent);
+/* Modified: extern declaration (need more info) */
+extern void free_wrr_sched_group(struct task_group *tg);
+extern int alloc_wrr_sched_group(struct task_group *tg, struct task_group *parent);
+extern char *task_group_path(struct task_group *tg);
 
 #else /* CONFIG_CGROUP_SCHED */
 
@@ -309,6 +323,23 @@ struct rt_rq {
 #endif
 };
 
+/* Modified: wrr runqueue */
+struct wrr_rq{
+	struct list_head queue;		/* Only one active queue */	
+	unsigned long wrr_nr_running;
+
+	int wrr_throttled;
+	u64 wrr_time;
+	u64 wrr_runtime;
+	raw_spinlock_t wrr_runtime_lock;
+
+	unsigned long wrr_nr_boosted;
+	struct rq *rq;
+	struct list_head leaf_wrr_rq_list;
+	struct task_group *tg;
+
+};
+
 #ifdef CONFIG_SMP
 
 /*
@@ -370,6 +401,8 @@ struct rq {
 
 	struct cfs_rq cfs;
 	struct rt_rq rt;
+	/* Modified: struct wrr_rq added */
+	struct wrr_rq wrr;
 
 #ifdef CONFIG_FAIR_GROUP_SCHED
 	/* list of leaf cfs_rq on this cpu: */
@@ -378,6 +411,8 @@ struct rq {
 #ifdef CONFIG_RT_GROUP_SCHED
 	struct list_head leaf_rt_rq_list;
 #endif
+/* Modified: list_head added */
+	struct list_head leaf_wrr_rq_list;
 
 	/*
 	 * This is part of a global counter where only the total sum
@@ -844,7 +879,8 @@ extern const struct sched_class stop_sched_class;
 extern const struct sched_class rt_sched_class;
 extern const struct sched_class fair_sched_class;
 extern const struct sched_class idle_sched_class;
-
+/* Modified: extern declaration */
+extern const struct sched_class wrr_sched_class;
 
 #ifdef CONFIG_SMP
 
@@ -866,6 +902,8 @@ extern void update_group_power(struct sched_domain *sd, int cpu);
 extern int update_runtime(struct notifier_block *nfb, unsigned long action, void *hcpu);
 extern void init_sched_rt_class(void);
 extern void init_sched_fair_class(void);
+/* Modified: extern declaration (need more info) */
+extern void init_sched_wrr_class(void);
 
 extern void resched_task(struct task_struct *p);
 extern void resched_cpu(int cpu);
@@ -1138,6 +1176,9 @@ extern void print_rt_stats(struct seq_file *m, int cpu);
 
 extern void init_cfs_rq(struct cfs_rq *cfs_rq);
 extern void init_rt_rq(struct rt_rq *rt_rq, struct rq *rq);
+/* Modified: extern declaration (need more info) */
+extern void init_wrr_rq(struct wrr_rq *wrr_rq);
+
 extern void unthrottle_offline_cfs_rqs(struct rq *rq);
 
 extern void account_cfs_bandwidth_used(int enabled, int was_enabled);

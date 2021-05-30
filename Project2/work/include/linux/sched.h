@@ -39,6 +39,8 @@
 #define SCHED_BATCH		3
 /* SCHED_ISO: reserved but not implemented yet */
 #define SCHED_IDLE		5
+/* Modified: SCHED_WRR */
+#define SCHED_WRR		6
 /* Can be ORed in to make sure the process is reverted back to SCHED_NORMAL on fork */
 #define SCHED_RESET_ON_FORK     0x40000000
 
@@ -149,6 +151,8 @@ extern unsigned long get_parent_ip(unsigned long addr);
 
 struct seq_file;
 struct cfs_rq;
+/* Modified: struct wrr_rq declaration */
+struct wrr_rq;
 struct task_group;
 #ifdef CONFIG_SCHED_DEBUG
 extern void proc_sched_show_task(struct task_struct *p, struct seq_file *m);
@@ -1247,11 +1251,29 @@ struct sched_rt_entity {
 #endif
 };
 
+/* Modified: wrr entity */
+struct sched_wrr_entity{
+	struct list_head run_list;
+	unsigned long timeout;
+	unsigned int time_slice;
+	int nr_cpus_allowed;
+
+	struct sched_wrr_entity *back;
+
+	struct sched_wrr_entity *parent;
+	struct wrr_rq *wrr_rq;	// This entity belongs to ...
+	struct wrr_rq *my_q;	// Its child entity belongs to ...
+};
+
 /*
  * default timeslice is 100 msecs (used only for SCHED_RR tasks).
  * Timeslices get refilled after they expire.
  */
 #define RR_TIMESLICE		(100 * HZ / 1000)
+
+/* Modified: WRR timeslice */
+#define WRR_FG_TIMESLICE	(100 * HZ / 1000)
+#define WRR_BG_TIMESLICE	(10 * HZ / 1000)
 
 struct rcu_node;
 
@@ -1280,6 +1302,8 @@ struct task_struct {
 	const struct sched_class *sched_class;
 	struct sched_entity se;
 	struct sched_rt_entity rt;
+	/* Modified: varaible added */
+	struct sched_wrr_entity wrr;
 #ifdef CONFIG_CGROUP_SCHED
 	struct task_group *sched_task_group;
 #endif

@@ -1900,6 +1900,7 @@ void init_sched_rt_class(void)
  */
 static void switched_to_rt(struct rq *rq, struct task_struct *p)
 {
+	// printk("> switched_to_rt\n");
 	int check_resched = 1;
 
 	/*
@@ -1916,6 +1917,7 @@ static void switched_to_rt(struct rq *rq, struct task_struct *p)
 		    rq != task_rq(p))
 			check_resched = 0;
 #endif /* CONFIG_SMP */
+		// printk(">> switched_to_rt resched\n");
 		if (check_resched && p->prio < rq->curr->prio)
 			resched_task(rq->curr);
 	}
@@ -2036,7 +2038,8 @@ static unsigned int get_rr_interval_rt(struct rq *rq, struct task_struct *task)
 }
 
 const struct sched_class rt_sched_class = {
-	.next			= &fair_sched_class,
+	/* Don't forget to link the node (this pains me a lot) */
+	.next			= &wrr_sched_class,
 	.enqueue_task		= enqueue_task_rt,
 	.dequeue_task		= dequeue_task_rt,
 	.yield_task		= yield_task_rt,
