@@ -1708,6 +1708,7 @@ int wake_up_state(struct task_struct *p, unsigned int state)
  */
 static void __sched_fork(struct task_struct *p)
 {
+	/* Need revised! */
 	p->on_rq			= 0;
 
 	p->se.on_rq			= 0;
@@ -1723,6 +1724,8 @@ static void __sched_fork(struct task_struct *p)
 #endif
 
 	INIT_LIST_HEAD(&p->rt.run_list);
+	/* Modified: wrr init */
+	INIT_LIST_HEAD(&p->wrr.run_list);
 
 #ifdef CONFIG_PREEMPT_NOTIFIERS
 	INIT_HLIST_HEAD(&p->preempt_notifiers);
@@ -4169,14 +4172,22 @@ static struct task_struct *find_process_by_pid(pid_t pid)
 static void
 __setscheduler(struct rq *rq, struct task_struct *p, int policy, int prio)
 {
+	// printk(">>> __setscheduler, 1\n");
+	/* Need revised! */
 	p->policy = policy;
 	p->rt_priority = prio;
 	p->normal_prio = normal_prio(p);
 	/* we are holding p->pi_lock already */
 	p->prio = rt_mutex_getprio(p);
-	if (rt_prio(p->prio))
-		p->sched_class = &rt_sched_class;
-	else
+	if(p->policy == SCHED_WRR){
+		// printk(">>> __setscheduler, wrr\n");
+		p->sched_class = &wrr_sched_class;
+	}	
+	else if (rt_prio(p->prio)){	/* prio: 0~99 */
+		// printk(">>> __setscheduler, rt\n");
+		p->sched_class = &rt_sched_class;	
+	}
+	else	/* prio: 100~139 */
 		p->sched_class = &fair_sched_class;
 	set_load_weight(p);
 }
@@ -4203,6 +4214,8 @@ static bool check_same_owner(struct task_struct *p)
 static int __sched_setscheduler(struct task_struct *p, int policy,
 				const struct sched_param *param, bool user)
 {
+	/* Need revised! */
+	// printk(">> setscheduler, 1\n");
 	int retval, oldprio, oldpolicy = -1, on_rq, running;
 	unsigned long flags;
 	const struct sched_class *prev_class;
@@ -4222,7 +4235,7 @@ recheck:
 
 		if (policy != SCHED_FIFO && policy != SCHED_RR &&
 				policy != SCHED_NORMAL && policy != SCHED_BATCH &&
-				policy != SCHED_IDLE)
+				policy != SCHED_IDLE && policy != SCHED_WRR)
 			return -EINVAL;
 	}
 
@@ -4235,7 +4248,8 @@ recheck:
 	    (p->mm && param->sched_priority > MAX_USER_RT_PRIO-1) ||
 	    (!p->mm && param->sched_priority > MAX_RT_PRIO-1))
 		return -EINVAL;
-	if (rt_policy(policy) != (param->sched_priority != 0))
+	/* Modified: for prio 1-99 */
+	if ((rt_policy(policy) | wrr_policy(policy)) != (param->sched_priority != 0))
 		return -EINVAL;
 
 	/*
@@ -4287,7 +4301,9 @@ recheck:
 	 * To be able to change p->policy safely, the appropriate
 	 * runqueue lock must be held.
 	 */
+	// printk(">> setscheduler, 2: nr_running=");
 	rq = task_rq_lock(p, &flags);
+	// printk("%ld\n", rq->nr_running);
 
 	/*
 	 * Changing the policy of the stop threads its a very bad idea
@@ -4324,6 +4340,7 @@ recheck:
 #endif
 
 	/* recheck policy now with rq lock held */
+	// printk(">> setscheduler, 3\n");
 	if (unlikely(oldpolicy != -1 && oldpolicy != p->policy)) {
 		policy = oldpolicy = -1;
 		task_rq_unlock(rq, p, &flags);
@@ -4331,22 +4348,30 @@ recheck:
 	}
 	on_rq = p->on_rq;
 	running = task_current(rq, p);
-	if (on_rq)
+	if (on_rq){
+		// printk(">> setscheduler, 4\n");
 		dequeue_task(rq, p, 0);
-	if (running)
+	}
+	if (running){
+		// printk(">> setscheduler, 5\n");
 		p->sched_class->put_prev_task(rq, p);
-
+	}
+		
 	p->sched_reset_on_fork = reset_on_fork;
 
 	oldprio = p->prio;
 	prev_class = p->sched_class;
 	__setscheduler(rq, p, policy, param->sched_priority);
 
-	if (running)
+	if (running){
+		// printk(">> setscheduler, 6\n");
 		p->sched_class->set_curr_task(rq);
-	if (on_rq)
+	}
+	if (on_rq){
+		// printk(">> setscheduler, 7\n");
 		enqueue_task(rq, p, 0);
-
+	}
+		
 	check_class_changed(rq, p, prev_class, oldprio);
 	task_rq_unlock(rq, p, &flags);
 
@@ -4895,6 +4920,8 @@ SYSCALL_DEFINE1(sched_get_priority_max, int, policy)
 	switch (policy) {
 	case SCHED_FIFO:
 	case SCHED_RR:
+	/* Modified here. We set wrr's prio range the same as rt's (1-99) */
+	case SCHED_WRR:
 		ret = MAX_USER_RT_PRIO-1;
 		break;
 	case SCHED_NORMAL:
@@ -4920,9 +4947,11 @@ SYSCALL_DEFINE1(sched_get_priority_min, int, policy)
 	switch (policy) {
 	case SCHED_FIFO:
 	case SCHED_RR:
+	/* Modified here */
+	case SCHED_WRR:
 		ret = 1;
 		break;
-	case SCHED_NORMAL:
+		case SCHED_NORMAL:
 	case SCHED_BATCH:
 	case SCHED_IDLE:
 		ret = 0;
@@ -7143,6 +7172,8 @@ void __init sched_init(void)
 		rq->calc_load_update = jiffies + LOAD_FREQ;
 		init_cfs_rq(&rq->cfs);
 		init_rt_rq(&rq->rt, rq);
+		/* Modified: function added */
+		init_wrr_rq(&rq->wrr);
 #ifdef CONFIG_FAIR_GROUP_SCHED
 		root_task_group.shares = ROOT_TASK_GROUP_LOAD;
 		INIT_LIST_HEAD(&rq->leaf_cfs_rq_list);
@@ -7412,6 +7443,8 @@ static void free_sched_group(struct task_group *tg)
 {
 	free_fair_sched_group(tg);
 	free_rt_sched_group(tg);
+	/* Modified */
+	free_wrr_sched_group(tg);
 	autogroup_free(tg);
 	kfree(tg);
 }
@@ -7430,6 +7463,10 @@ struct task_group *sched_create_group(struct task_group *parent)
 		goto err;
 
 	if (!alloc_rt_sched_group(tg, parent))
+		goto err;
+
+	/* Modified */
+	if (!alloc_wrr_sched_group(tg, parent))
 		goto err;
 
 	spin_lock_irqsave(&task_group_lock, flags);
