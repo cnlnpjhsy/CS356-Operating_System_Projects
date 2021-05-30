@@ -15,4 +15,4 @@ Contains:
 - `README.md` - This file
 
 ---
-It's really troublesome to point out all changes here, so I will use Pull Request on Github to show the changes directly by updating the original kernel files first then making pull requests with the changed files. You can check the changes at https://github.com/cnlnpjhsy/CS356-Operating_System_Projects/pulls. (This repo will remain private until June 4th, 2021.)
+It's really troublesome to point out all changes here, so I will use Pull Request on Github to show the changes directly by updating the original kernel files first then making pull requests with the changed files. You can check the changes at https://github.com/cnlnpjhsy/CS356-Operating_System_Projects/pull/1/files. (This repo will remain private until June 4th, 2021.)
