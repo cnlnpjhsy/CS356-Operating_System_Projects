@@ -4183,7 +4183,7 @@ __setscheduler(struct rq *rq, struct task_struct *p, int policy, int prio)
 		// printk(">>> __setscheduler, wrr\n");
 		p->sched_class = &wrr_sched_class;
 	}	
-	else if (rt_prio(p->prio)){	/* prio: 0~99 */
+	else if (rt_prio(p->prio)){	/* prio: 1~99 */
 		// printk(">>> __setscheduler, rt\n");
 		p->sched_class = &rt_sched_class;	
 	}

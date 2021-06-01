@@ -1,0 +1,127 @@
+cnlnpjhsy@ubuntu:~$ adb shell
+root@generic:/ # ps
+USER      PID   PPID  VSIZE  RSS   WCHAN            PC  NAME
+root      1     0     2208   800   sys_epoll_ 0006db7c S /init
+root      2     0     0      0       kthreadd 00000000 S kthreadd
+root      3     2     0      0     run_ksofti 00000000 S ksoftirqd/0
+root      6     2     0      0     rescuer_th 00000000 S khelper
+root      7     2     0      0     bdi_sync_s 00000000 S sync_supers
+root      8     2     0      0     bdi_forker 00000000 S bdi-default
+root      9     2     0      0     rescuer_th 00000000 S kblockd
+root      10    2     0      0     rescuer_th 00000000 S rpciod
+root      11    2     0      0     worker_thr 00000000 S kworker/0:1
+root      12    2     0      0         kswapd 00000000 S kswapd0
+root      13    2     0      0     fsnotify_m 00000000 S fsnotify_mark
+root      14    2     0      0     rescuer_th 00000000 S crypto
+root      25    2     0      0     worker_thr 00000000 S kworker/u:1
+root      30    2     0      0     mtd_blktra 00000000 S mtdblock0
+root      35    2     0      0     mtd_blktra 00000000 S mtdblock1
+root      40    2     0      0     mtd_blktra 00000000 S mtdblock2
+root      41    2     0      0     rescuer_th 00000000 S binder
+root      42    2     0      0     rescuer_th 00000000 S deferwq
+root      43    2     0      0     worker_thr 00000000 S kworker/u:2
+root      44    2     0      0     mmc_queue_ 00000000 S mmcqd/0
+root      45    1     1948   652   poll_sched 0006530c S /sbin/ueventd
+root      47    2     0      0     kjournald2 00000000 S jbd2/mtdblock0-
+root      48    2     0      0     rescuer_th 00000000 S ext4-dio-unwrit
+root      51    2     0      0     bdi_writeb 00000000 S flush-31:1
+root      53    2     0      0     kjournald2 00000000 S jbd2/mtdblock1-
+root      54    2     0      0     rescuer_th 00000000 S ext4-dio-unwrit
+root      57    2     0      0     bdi_writeb 00000000 S flush-31:2
+root      59    2     0      0     kjournald2 00000000 S jbd2/mtdblock2-
+root      60    2     0      0     rescuer_th 00000000 S ext4-dio-unwrit
+logd      61    1     10920  2388  sys_rt_sig a8358e18 S /system/bin/logd
+root      62    1     9068   2488  hrtimer_na af7aa4e0 S /system/bin/vold
+root      66    1     2432   332   sys_epoll_ 00032b14 S /sbin/healthd
+root      70    2     0      0     kauditd_th 00000000 S kauditd
+root      71    1     3052   1128  sys_epoll_ a7456478 S /system/bin/lmkd
+system    72    1     2940   1080  binder_thr ae13108c S /system/bin/servicemanager
+system    73    1     64972  3348  sys_epoll_ b6d5a478 S /system/bin/surfaceflinger
+root      75    1     2472   956   sys_epoll_ b553f478 S /system/bin/qemud
+shell     78    1     3020   1144  n_tty_read ad6b490c S /system/bin/sh
+root      79    1     5268   412   poll_sched 0002aa80 S /sbin/adbd
+root      80    1     14108  1912  hrtimer_na a71174e0 S /system/bin/netd
+root      81    1     3936   1640  __skb_recv acd2b8a4 S /system/bin/debuggerd
+radio     82    1     7800   1584  hrtimer_na b6c824e0 S /system/bin/rild
+drm       83    1     12496  3648  binder_thr b5c3508c S /system/bin/drmserver
+media     84    1     126312 8504  binder_thr aa43508c S /system/bin/mediaserver
+root      85    1     2736   1148  unix_strea ac7ef90c S /system/bin/installd
+keystore  86    1     5684   1980  binder_thr ae87b08c S /system/bin/keystore
+root      87    1     476092 48816 poll_sched af2aa2fc S zygote
+system    88    1     5240   1796  binder_thr a96a208c S /system/bin/gatekeeperd
+root      92    1     2752   1184  hrtimer_na a78bc4e0 S /system/xbin/perfprofd
+system    93    1     6256   1840  binder_thr a984a08c S /system/bin/fingerprintd
+root      152   2     0      0     worker_thr 00000000 S kworker/0:2
+system    244   87    624904 90492 sys_epoll_ af2aa478 S system_server
+media_rw  542   62    6240   1856  inotify_re b1cb990c S /system/bin/sdcard
+u0_a32    684   87    511268 38200 sys_epoll_ af2aa478 S com.android.inputmethod.latin
+radio     700   87    514612 45544 sys_epoll_ af2aa478 S com.android.phone
+u0_a7     708   87    521164 55032          0 af280924 R com.android.launcher3
+u0_a2     742   87    496600 33028 sys_epoll_ af2aa478 S android.process.acore
+u0_a6     775   87    489372 25760 sys_epoll_ af2aa478 S com.android.externalstorage
+u0_a35    780   87    490252 28256 sys_epoll_ af2aa478 S com.android.music
+root      828   2     0      0     bdi_writeb 00000000 S flush-179:0
+u0_a5     830   87    495592 31564 sys_epoll_ af2aa478 S android.process.media
+u0_a13    880   87    549052 75120 futex_wait af2805cc S com.android.systemui
+u0_a40    920   87    490724 26432 sys_epoll_ af2aa478 S com.android.printspooler
+u0_a23    978   87    492544 26780 sys_epoll_ af2aa478 S com.android.deskclock
+u0_a42    994   87    489244 25328 futex_wait af2805cc S com.android.quicksearchbox
+u0_a53    1008  87    506524 36892 sys_epoll_ af2aa478 S com.osprj.test.processtest
+root      1024  79    3020   1144  sys_rt_sig b3876e18 S /system/bin/sh
+root      1030  1024  2700   1032           0 a830a90c R ps
+root@generic:/ # ./data/misc/testfile                                          
+========== Scheduler Test Start ==========
+Please input the process id of testprocess first:1008
+Current scheduling policy is: SCHED_NORMAL
+Change to which scheduling policy? (0 = NORMAL, 1 = FIFO, 2 = RR, 6 = WRR):6
+Set process's priority (1-99):10
+
+Changing...Done.
+
+Current scheduling policy is: SCHED_WRR
+With timeslice: 100 ms.
+
+Test again? (1/0): 1
+
+/* Opened a new application. processtest is in background */
+
+Please input the process id of testprocess first:1008
+Current scheduling policy is: SCHED_WRR
+With timeslice: 10 ms.
+Change to which scheduling policy? (0 = NORMAL, 1 = FIFO, 2 = RR, 6 = WRR):2
+Set process's priority (1-99):56
+
+Changing...Done.
+
+Current scheduling policy is: SCHED_RR
+With timeslice: 100 ms.
+
+Test again? (1/0): 1
+
+Please input the process id of testprocess first:1008
+Current scheduling policy is: SCHED_RR
+With timeslice: 100 ms.
+Change to which scheduling policy? (0 = NORMAL, 1 = FIFO, 2 = RR, 6 = WRR):6
+Set process's priority (1-99):44
+
+Changing...Done.
+
+Current scheduling policy is: SCHED_WRR
+With timeslice: 10 ms.
+
+Test again? (1/0): 1
+
+/* Switch process. processtest is foreground again now */
+
+Please input the process id of testprocess first:1008
+Current scheduling policy is: SCHED_WRR
+With timeslice: 100 ms.
+Change to which scheduling policy? (0 = NORMAL, 1 = FIFO, 2 = RR, 6 = WRR):0
+
+Changing...Done.
+
+Current scheduling policy is: SCHED_NORMAL
+
+Test again? (1/0): 0
+
+========== Scheduler Test End ==========

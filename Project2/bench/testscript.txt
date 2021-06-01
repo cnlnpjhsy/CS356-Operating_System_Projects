@@ -1,0 +1,91 @@
+root@generic:/ # clear
+
+root@generic:/ # ./data/misc/benchmark 75 20                                   
+SCHED_NORMAL:	n = 75, 9.715 Mflop/s (1.737 seconds)
+SCHED_FIFO:	n = 75, 9.182 Mflop/s (1.838 seconds)
+SCHED_RR:	n = 75, 8.141 Mflop/s (2.073 seconds)
+SCHED_WRR:	n = 75, 8.954 Mflop/s (1.885 seconds)
+
+root@generic:/ # ./data/misc/benchmark 75 40                                   
+SCHED_NORMAL:	n = 75, 9.135 Mflop/s (3.695 seconds)
+SCHED_FIFO:	n = 75, 7.149 Mflop/s (4.721 seconds)
+SCHED_RR:	n = 75, 8.216 Mflop/s (4.108 seconds)
+SCHED_WRR:	n = 75, 8.604 Mflop/s (3.923 seconds)
+
+root@generic:/ # ./data/misc/benchmark 75 60                                   
+SCHED_NORMAL:	n = 75, 9.201 Mflop/s (5.502 seconds)
+SCHED_FIFO:	n = 75, 7.989 Mflop/s (6.337 seconds)
+SCHED_RR:	n = 75, 6.564 Mflop/s (7.713 seconds)
+SCHED_WRR:	n = 75, 8.194 Mflop/s (6.178 seconds)
+
+root@generic:/ # ./data/misc/benchmark 75 80                                   
+SCHED_NORMAL:	n = 75, 8.579 Mflop/s (7.868 seconds)
+SCHED_FIFO:	n = 75, 6.425 Mflop/s (10.506 seconds)
+SCHED_RR:	n = 75, 6.871 Mflop/s (9.824 seconds)
+SCHED_WRR:	n = 75, 8.106 Mflop/s (8.327 seconds)
+
+root@generic:/ # ./data/misc/benchmark 75 100                              
+SCHED_NORMAL:	n = 75, 9.861 Mflop/s (8.556 seconds)
+SCHED_FIFO:	n = 75, 8.113 Mflop/s (10.400 seconds)
+SCHED_RR:	n = 75, 7.644 Mflop/s (11.038 seconds)
+SCHED_WRR:	n = 75, 8.575 Mflop/s (9.840 seconds)
+
+root@generic:/ # ./data/misc/benchmark 100 20                                  
+SCHED_NORMAL:	n = 100, 9.340 Mflop/s (4.283 seconds)
+SCHED_FIFO:	n = 100, 5.748 Mflop/s (6.959 seconds)
+SCHED_RR:	n = 100, 6.115 Mflop/s (6.541 seconds)
+SCHED_WRR:	n = 100, 8.144 Mflop/s (4.912 seconds)
+
+root@generic:/ # ./data/misc/benchmark 100 40                                  
+SCHED_NORMAL:	n = 100, 9.265 Mflop/s (8.634 seconds)
+SCHED_FIFO:	n = 100, 7.933 Mflop/s (10.084 seconds)
+SCHED_RR:	n = 100, 8.074 Mflop/s (9.909 seconds)
+SCHED_WRR:	n = 100, 9.371 Mflop/s (8.537 seconds)
+
+root@generic:/ # ./data/misc/benchmark 100 60                                  
+SCHED_NORMAL:	n = 100, 10.274 Mflop/s (11.680 seconds)
+SCHED_FIFO:	n = 100, 8.443 Mflop/s (14.212 seconds)
+SCHED_RR:	n = 100, 8.585 Mflop/s (13.978 seconds)
+SCHED_WRR:	n = 100, 9.401 Mflop/s (12.765 seconds)
+
+root@generic:/ # ./data/misc/benchmark 100 80                                  
+SCHED_NORMAL:	n = 100, 9.576 Mflop/s (16.708 seconds)
+SCHED_FIFO:	n = 100, 7.537 Mflop/s (21.229 seconds)
+SCHED_RR:	n = 100, 7.632 Mflop/s (20.964 seconds)
+SCHED_WRR:	n = 100, 8.967 Mflop/s (17.844 seconds)
+
+root@generic:/ # ./data/misc/benchmark 100 100                                 
+SCHED_NORMAL:	n = 100, 10.688 Mflop/s (18.712 seconds)
+SCHED_FIFO:	n = 100, 8.803 Mflop/s (22.720 seconds)
+SCHED_RR:	n = 100, 8.713 Mflop/s (22.955 seconds)
+SCHED_WRR:	n = 100, 9.985 Mflop/s (20.030 seconds)
+
+root@generic:/ # ./data/misc/benchmark 150 20                                  
+SCHED_NORMAL:	n = 150, 10.018 Mflop/s (13.475 seconds)
+SCHED_FIFO:	n = 150, 8.644 Mflop/s (15.617 seconds)
+SCHED_RR:	n = 150, 8.545 Mflop/s (15.799 seconds)
+SCHED_WRR:	n = 150, 10.518 Mflop/s (12.835 seconds)
+
+root@generic:/ # ./data/misc/benchmark 150 40                                  
+SCHED_NORMAL:	n = 150, 10.197 Mflop/s (26.477 seconds)
+SCHED_FIFO:	n = 150, 8.792 Mflop/s (30.708 seconds)
+SCHED_RR:	n = 150, 8.571 Mflop/s (31.501 seconds)
+SCHED_WRR:	n = 150, 10.381 Mflop/s (26.009 seconds)
+
+root@generic:/ # ./data/misc/benchmark 150 60                                  
+SCHED_NORMAL:	n = 150, 10.138 Mflop/s (39.950 seconds)
+SCHED_FIFO:	n = 150, 8.526 Mflop/s (47.504 seconds)
+SCHED_RR:	n = 150, 8.591 Mflop/s (47.145 seconds)
+SCHED_WRR:	n = 150, 10.110 Mflop/s (40.059 seconds)
+
+root@generic:/ # ./data/misc/benchmark 150 80                                  
+SCHED_NORMAL:	n = 150, 10.255 Mflop/s (52.657 seconds)
+SCHED_FIFO:	n = 150, 8.674 Mflop/s (62.252 seconds)
+SCHED_RR:	n = 150, 8.714 Mflop/s (61.967 seconds)
+SCHED_WRR:	n = 150, 10.214 Mflop/s (52.866 seconds)
+
+root@generic:/ # ./data/misc/benchmark 150 100                                 
+SCHED_NORMAL:	n = 150, 10.285 Mflop/s (65.627 seconds)
+SCHED_FIFO:	n = 150, 8.658 Mflop/s (77.964 seconds)
+SCHED_RR:	n = 150, 8.521 Mflop/s (79.220 seconds)
+SCHED_WRR:	n = 150, 9.424 Mflop/s (71.623 seconds)
