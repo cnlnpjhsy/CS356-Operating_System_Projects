@@ -6,3 +6,8 @@
   - Calling `ptree` in AVD
   - Child process test
   - Burger Buddies Problem
+
+- Project 2: Android Scheduler WRR (Updated 2021/6/1)
+  - *Basic* - Files changed in Linux kernel
+  - *Basic* - Scheduler-changing testfile
+  - *Bonus* - Scheduler performance benchmark
