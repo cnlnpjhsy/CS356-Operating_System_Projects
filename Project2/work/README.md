@@ -7,6 +7,7 @@ Contains:
 - `include/linux/sched.h` - New defination & declaration
 - `kernel/sched/`
   - `core.c` - Fixed for the new scheduler WRR
+  - `debug.c` - Change `static char *task_group_path(struct task_group *tg)` to a non-static function
   - `Makefile` - `wrr.o` added
   - `rt.c` - Link the next schedule class to `wrr_sched_class`
   - `sched.h` - New defination & declaration
